@@ -41,6 +41,7 @@
 
             firebase.analytics().logEvent('test_event');
 
+            // https://stackoverflow.com/a/41594695
             window.addEventListener('message', function(event) {
                 var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
                 if (typeof event.data == 'object' && event.data.call=='sendValue') {
