@@ -31,10 +31,26 @@
 </head>
 <body>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const event = urlParams.get('event');
-        console.log(event);
-        firebase.analytics().logEvent('test_event');
+        let startAnalytics = ()=>{
+            const urlParams = new URLSearchParams(window.location.search);
+            const event = urlParams.get('event');
+            console.log(event);
+            if(event != "app_startup"){
+                return;
+            }
+
+            firebase.analytics().logEvent('test_event');
+
+            window.addEventListener('message', function(event) {
+                var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
+                if (typeof event.data == 'object' && event.data.call=='sendValue') {
+                    // Do something with event.data.value;
+                    console.log(event.data.value);
+                    firebase.analytics().logEvent(event.data.value);
+                }
+            }, false);
+        }
+        startAnalytics();
       </script>
 </body>
 </html>
