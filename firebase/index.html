@@ -15,7 +15,7 @@
 <body>
     
     <script>
-        let startAnalytics = ()=>{
+        var startAnalytics = function(){
             const urlParams = new URLSearchParams(window.location.search);
             const event = urlParams.get('event');
             console.log(event);
@@ -49,13 +49,9 @@
             // measurementId: "G-G3F66V8LQ2"
         };
         // Initialize Firebase
-        let initialized = firebase.initializeApp(firebaseConfig);
-        firebase.analytics.isSupported().then((isSupported) => {
-            if (isSupported) {
-                let analytics = firebase.analytics();
-                startAnalytics();
-            }
-        })
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        startAnalytics();
     </script>
     <!-- end firebase -->
 </body>
