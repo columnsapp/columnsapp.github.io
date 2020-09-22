@@ -16,8 +16,8 @@
     
     <script>
         var startAnalytics = function(){
-            const urlParams = new URLSearchParams(window.location.search);
-            const event = urlParams.get('event');
+            var urlParams = new URLSearchParams(window.location.search);
+            var event = urlParams.get('event');
             console.log(event);
             if(event != "app_startup"){
                 return;
