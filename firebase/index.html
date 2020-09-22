@@ -49,10 +49,10 @@
             measurementId: "G-G3F66V8LQ2"
         };
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        let initialized = firebase.initializeApp(firebaseConfig);
         firebase.analytics.isSupported().then((isSupported) => {
             if (isSupported) {
-                analytics = firebase.analytics();
+                let analytics = firebase.analytics();
                 startAnalytics();
             }
         })
