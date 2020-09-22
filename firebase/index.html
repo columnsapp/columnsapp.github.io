@@ -4,38 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Columns Firebase</title>
-
+    <!-- begin firebase -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
-
-</head>
-<body>
-    
     <script>
-        var startAnalytics = function(){
-            var urlParams = new URLSearchParams(window.location.search);
-            var event = urlParams.get('event');
-            console.log(event);
-            if(event != "app_startup"){
-                return;
-            }
-            // firebase.analytics().logEvent('test_event');
-            // https://stackoverflow.com/a/41594695
-            window.addEventListener('message', function(event) {
-                var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
-                if (typeof event.data == 'object' && event.data.call=='sendValue') {
-                    // Do something with event.data.value;
-                    console.log(event.data.value);
-                    firebase.analytics().logEvent(event.data.value);
-                }
-            }, false);
-        }
-
-        // <!-- begin firebase -->
-
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         var firebaseConfig = {
@@ -46,13 +21,37 @@
             storageBucket: "columns-3bc39.appspot.com",
             messagingSenderId: "777140898426",
             appId: "1:777140898426:web:61e4d5f37c29bdbae909c3",
-            // measurementId: "G-G7EQ4MY4Q2"
+            // measurementId: "G-KTT09NWEYV"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
-        startAnalytics();
     </script>
     <!-- end firebase -->
+</head>
+<body>
+    <script>
+        let startAnalytics = ()=>{
+            const urlParams = new URLSearchParams(window.location.search);
+            const event = urlParams.get('event');
+            console.log(event);
+            if(event != "app_startup"){
+                return;
+            }
+
+            // firebase.analytics().logEvent('test_event');
+
+            // https://stackoverflow.com/a/41594695
+            window.addEventListener('message', function(event) {
+                var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
+                if (typeof event.data == 'object' && event.data.call=='sendValue') {
+                    // Do something with event.data.value;
+                    console.log(event.data.value);
+                    firebase.analytics().logEvent(event.data.value);
+                }
+            }, false);
+        }
+        startAnalytics();
+      </script>
 </body>
 </html>
