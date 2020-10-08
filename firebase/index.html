@@ -31,6 +31,14 @@
 </head>
 <body>
     <script>
+
+        const stringBeginsWith = (fullstring, x)=>{
+            if (fullstring.substring(0, x.length) === x) {
+                return true
+            };
+            return false
+        }
+
         let startAnalytics = ()=>{
             const urlParams = new URLSearchParams(window.location.search);
             const event = urlParams.get('event');
@@ -47,6 +55,23 @@
                 if (typeof event.data == 'object' && event.data.call=='sendValue') {
                     // Do something with event.data.value;
                     console.log(event.data.value);
+
+                    // if event.data.value begins with setproperty*
+                    // example: event.data.value = setproperty*AppVersion*1.0.27
+                    // let event={data:{value:"setproperty*AppVersion*1.0.27"}}; // testing
+                    if(stringBeginsWith( event.data.value, "setproperty*" )){
+                        // this is a property that needs to be set for this user
+                        let eventDataValue = event.data.value.split("*");
+                        
+                        let setPropertyOptions = {};
+                        setPropertyOptions[eventDataValue[1]] = eventDataValue[2];
+                        // console.log(setPropertyOptions);
+
+                        firebase.analytics().setUserProperties( setPropertyOptions );
+                        return;
+                    }
+
+                    // it's just a regular firebase event, as a string.
                     firebase.analytics().logEvent(event.data.value);
                 }
             }, false);
